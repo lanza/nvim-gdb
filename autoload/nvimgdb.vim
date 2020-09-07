@@ -8,7 +8,7 @@ endfunction
 function! nvimgdb#TermOpen(command, tab)
   return termopen(a:command,
     \ {'on_stdout': {j,d,e -> GdbParserFeed(a:tab, d)},
-    \  'on_exit': {j,c,e -> execute('if c == 0 | silent! close! | endif')},
+    \  'on_exit': {j,c,e -> execute('echo close')},
     \ })
 endfunction
 
