@@ -34,7 +34,8 @@ class Config(Common):
                             '●⁹', '●ⁿ'],
         'sign_breakpoint_priority': 10,
         'codewin_command': 'new',
-        'set_scroll_off': 5
+        'set_scroll_off': 5,
+        "start_in_insert": 0
         }
 
     def __init__(self, common: Common):

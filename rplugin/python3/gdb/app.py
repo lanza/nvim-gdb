@@ -75,8 +75,9 @@ class App(Common):
         # Setup 'errorformat' for the given backend.
         self.efmmgr.setup(self.backend.get_error_formats())
 
-        # Start insert mode in the GDB window
-        self.vim.feedkeys("i")
+        if self.config.get_start_in_insert():
+            # Start insert mode in the GDB window
+            self.vim.feedkeys("i")
 
     def start(self):
         """Spawn the debugger, the parser should be ready by now."""
