@@ -6,7 +6,7 @@ Apply overrides and overloads.
 
 import copy
 import re
-from typing import Dict, Any
+from typing import Callable, Dict, Any
 from gdb.keymaps import Keymaps
 from gdb.common import Common
 
@@ -138,3 +138,57 @@ class Config(Common):
     def get_or(self, key: str, val):
         """Get the configuration value by key or return the val if missing."""
         return self.config.get(key, val)
+
+    def get_key_continue(self) -> str:
+        return self.get("key_continue")
+
+    def get_key_next(self) -> str:
+        return self.get("key_next")
+
+    def get_key_step(self) -> str:
+        return self.get("key_step")
+
+    def get_key_finish(self) -> str:
+        return self.get("key_finish")
+
+    def get_key_breakpoint(self) -> str:
+        return self.get("key_breakpoint")
+
+    def get_key_frameup(self) -> str:
+        return self.get("key_frameup")
+
+    def get_key_framedown(self) -> str:
+        return self.get("key_framedown")
+
+    def get_key_eval(self) -> str:
+        return self.get("key_eval")
+
+    def get_key_quit(self) -> str:
+        return self.get("key_quit")
+
+    def get_set_tkeymaps(self) -> Callable:
+        return self.get("set_tkeymaps")
+
+    def get_set_keymaps(self) -> Callable:
+        return self.get("set_keymaps")
+
+    def get_unset_keymaps(self) -> Callable:
+        return self.get("unset_keymaps")
+
+    def get_sign_current_line(self) -> str:
+        return self.get("sign_current_line")
+
+    def get_sign_breakpoint(self) -> str:
+        return self.get("sign_breakpoint")
+
+    def get_codewin_command(self) -> str:
+        return self.get("codewin_command")
+
+    def get_set_scroll_off(self) -> int:
+        return self.get("set_scroll_off")
+
+    def get_start_in_insert(self) -> bool:
+        if self.get_or("set_scroll_off", 0) == 0:
+            return False
+        else:
+            return True
