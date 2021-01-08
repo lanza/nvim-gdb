@@ -1,5 +1,6 @@
 """LLDB specifics."""
 
+from gdb.common import Common
 import json
 import logging
 import re
@@ -10,7 +11,7 @@ from typing import Optional, List, Any
 
 
 class _ParserImpl(parser_impl.ParserImpl):
-    def __init__(self, common, handler):
+    def __init__(self, common: Common, handler: base.ParserHandler):
         super().__init__(common, handler)
 
         re_prompt = re.compile(r'\s\(lldb\) \(lldb\) $')
@@ -57,7 +58,7 @@ class _BreakpointImpl(base.BaseBreakpoint):
 class Lldb(base.BaseBackend):
     """LLDB parser and FSM."""
 
-    def create_parser_impl(self, common, handler) -> parser_impl.ParserImpl:
+    def create_parser_impl(self, common: Common, handler: base.ParserHandler) -> parser_impl.ParserImpl:
         """Create parser implementation instance."""
         return _ParserImpl(common, handler)
 

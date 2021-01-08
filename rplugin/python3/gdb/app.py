@@ -30,10 +30,8 @@ class App(Common):
         self._last_command: Union[str, None] = None
 
         # Create new tab for the debugging view and split horizontally
-        self.vim.command('tabnew'
-                         ' | setlocal nowinfixwidth'
-                         ' | setlocal nowinfixheight'
-                         ' | silent wincmd o')
+        self.vim.command('setlocal nowinfixwidth'
+                         ' | setlocal nowinfixheight | setlocal signcolumn=yes')
 
         # Get the selected backend module
         backend_maps: Dict[str, Type[base.BaseBackend]] = {
