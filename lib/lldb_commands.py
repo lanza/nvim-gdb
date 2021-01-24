@@ -105,10 +105,41 @@ def _server(server_address: str, debugger_id: int):
             os.unlink(server_address)
         except OSError:
             pass
+class NvimGDBStopHook:
+    def __init__(
+        self, target: lldb.SBTarget, extra_args: lldb.SBStructuredData, d: dict
+    ):
+        # unused block
+        target
+        extra_args
+        d
+        # unused block
+
+        self.proxy = xmlrpc.client.ServerProxy("http://localhost:8098")
+
+    def handle_stop(self, ctx: lldb.SBExecutionContext, stream: lldb.SBStream):
+        # unused block
+        stream
+
+        f: lldb.SBFrame = ctx.frame
+        le: lldb.SBLineEntry = f.GetLineEntry()
+        file: lldb.SBFileSpec = le.file
+
+        self.proxy.did_stop(file.fullpath, le.line)
+
 
 
 def init(debugger: lldb.SBDebugger, command: str, _3, _4):
     """Entry point."""
     server_address = command
     thrd = threading.Thread(target=_server, args=(server_address, debugger.GetID()))
+    # try:
+    #     v: str = debugger.GetVersionString()
+    #     version = int(v[13:15])
+    #     if version > 11:
+    #         ci = debugger.GetCommandInterpreter()
+    #         ro = lldb.SBCommandReturnObject()
+    #         ci.HandleCommand("target stop-hook add -P lldb_commands.NvimGDBStopHook", ro)
+    # except Exception as _:
+    #     pass
     thrd.start()
